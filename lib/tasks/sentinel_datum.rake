@@ -86,10 +86,14 @@ def getHTTPData
         hash['datetime'] = props['datetime']
         hash['power'] = props['datetime']
         hash['confidence'] = props['datetime']
-        hash['australian_state'] = props['australian_state']
+        hash['australian_state'] = props['australian_state'].strip
 
-        s = SentinelDatum.create(hash)
-        p "Created datapoint: #{s.sentinel_id} from state: #{s.australian_state}"
+        begin
+          s = SentinelDatum.create(hash)
+          p "Created sentinel datum at #{s.longitude}, #{s.latitude}"
+        rescue ActiveRecord::RecordInvalid => e
+            p e.record.error
+        end
       end
 
     end
