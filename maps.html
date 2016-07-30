@@ -81,6 +81,7 @@
 
         map.setOptions({styles: styles});
 
+        // Add dummy data
         var myLatLng = {lat: -25.363, lng: 131.044};
         var myLatLng2 = {lat: -26.363, lng: 132.044};
         var myLatLng3 = {lat: -29.363, lng: 135.044};
@@ -88,11 +89,6 @@
         map.data.add({geometry: new google.maps.Data.Point(myLatLng)});
         map.data.add({geometry: new google.maps.Data.Point(myLatLng2)});
         map.data.add({geometry: new google.maps.Data.Point(myLatLng3)});
-
-        // Prevent listeners
-        map.addListener('click', function(evt) {
-          console.log(map.getBounds().getNorthEast() + ',' + map.getBounds().getSouthWest());
-        });
       }
 
     </script>
