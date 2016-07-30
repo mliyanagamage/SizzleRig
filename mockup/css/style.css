@@ -14,6 +14,18 @@ body {
 	padding : 5px 15px;
 }
 
+.profile {
+    display: block;
+	width: 225px;
+	height: 225px;
+    border-radius: 50%;
+	border-color: #fff;
+    background-color: #fff;
+	background: #fff;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 #footer {
 	background-color: #333;
 	color: #fff;
