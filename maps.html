@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+    var map;
+    var styles = [
+      {
+        "stylers": [
+          { "visibility": "simplified" }
+        ]
+      },{
+        "featureType": "administrative",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      },{
+        "featureType": "landscape.man_made",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      },{
+        "featureType": "poi",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      },{
+        "featureType": "road",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      },{
+        "featureType": "transit",
+        "stylers": [
+          { "visibility": "off" }
+        ]
+      },{
+        "featureType": "water",
+        "stylers": [
+          { "color": "#ffffff" }
+        ]
+      },{
+        "featureType": "landscape.natural",
+        "elementType": "geometry.fill",
+        "stylers": [
+          { "color": "#808080" }
+        ]
+      }
+    ]
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -28, lng: 132},
+          zoom: 5,
+          disableDefaultUI: true
+        });
+
+        map.setOptions({styles: styles});
+
+        var myLatLng = {lat: -25.363, lng: 131.044};
+        var myLatLng2 = {lat: -26.363, lng: 132.044};
+        var myLatLng3 = {lat: -29.363, lng: 135.044};
+
+        map.data.add({geometry: new google.maps.Data.Point(myLatLng)});
+        map.data.add({geometry: new google.maps.Data.Point(myLatLng2)});
+        map.data.add({geometry: new google.maps.Data.Point(myLatLng3)});
+      }
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPw0MYOGDOjN2igcakAfzzp5DPnGe6XOc&callback=initMap"
+    async defer></script>
+  </body>
+</html>
