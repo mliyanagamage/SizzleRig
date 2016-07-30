@@ -5,6 +5,7 @@ require 'nokogiri'
 require 'csv'
 require 'net/ftp'
 require 'colorize'
+require 'httparty'
 
 BASE_URL = 'ftp://ftp.ga.gov.au/outgoing-emergency-imagery/sentinel/'
 
