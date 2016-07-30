@@ -1,0 +1,2 @@
+class SentinelDatum < ApplicationRecord
+end
