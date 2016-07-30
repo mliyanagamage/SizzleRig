@@ -4,64 +4,15 @@ require 'net/ftp'
 require 'httparty'
 
 MAX_DATA_POINTS = 200000
-FTP_URL = 'ftp://ftp.ga.gov.au/outgoing-emergency-imagery/sentinel/'
 HTTP_URL = "http://sentinel.ga.gov.au/geoserver-historic/sentinel/wfs?service=WFS&version=1.1.0&request=GetFeature&typeName=sentinel%3Ahotspot_historic&outputFormat=json&maxFeatures=#{MAX_DATA_POINTS}&CQL_FILTER="
 START_TIME_QUERY_PREFIX = '%20IS%20NOT%20null%20AND%20datetime%20BETWEEN%20'
 END_TIME_QUERY_PREFIX = '%20AND%20'
 
 namespace :data do
-  desc "Seed latest Sentinel data"
-  task seed_public_sentinel: :environment do
-    paths = getFTPFilePaths
-    getFTPData(paths)
-  end
-
-  desc "Seed Sentinel data from API"
-  task seed_api_sentinel: :environment do
+  desc "Seed Sentinel data via HTTP"
+  task seed_sentinel: :environment do
     getHTTPData
   end
-end
-
-def getFTPFilePaths
-  uri = URI.parse(FTP_URL)
-  dirs = ['AVHRR', 'hotspots', 'MODIS', 'VIIRS']
-  path_list = []
-
-  dirs.each do |d|
-    begin
-      Net::FTP.open(uri.host) do |ftp|
-        ftp.login
-        ftp.chdir(uri.path + d)
-        lines = ftp.list('*hotspots.txt')
-
-        lines.each do |l|
-          name = l.split(" ").delete_if { |w| !w.include?(".txt")}
-          path = FTP_URL + d + '/' + name[0]
-          puts path
-          path_list << path
-        end
-      end
-    rescue Exception => e
-      puts "Exception: '#{e}'. FTP Failed."
-    end
-  end
-
-  path_list
-end
-
-def getFTPData(paths)
-  CSV::Converters[:blank_to_nil] = lambda do |field|
-    field && field.empty? ? nil : field
-  end
-
-  puts "Deprecated in migration!"
-  # paths.each do |path|
-  #   open(path) { |f|
-  #     csv = CSV.new(f, :headers => true, :header_converters => :symbol, :converters => [:all, :blank_to_nil])
-  #     csv.to_a.map {|row| SentinelDatum.create(row.to_hash)}
-  #   }
-  # end
-
 end
 
 def getHTTPData
@@ -79,27 +30,7 @@ def getHTTPData
 
       features = json['features']
       features.each do |f|
-        hash = Hash.new
-        props = f['properties']
-
-        hash['hotspot_id'] = f['id']
-        hash['sentinel_id'] = props['id']
-        hash['longitude'] = props['longitude']
-        hash['latitude'] = props['latitude']
-        hash['temp_kelvin'] = props['temp_kelvin']
-        hash['datetime'] = props['datetime']
-        hash['power'] = props['power']
-        hash['confidence'] = props['confidence']
-        hash['australian_state'] = props['australian_state'].strip
-
-        begin
-          s = SentinelDatum.create!(hash)
-          total += 1
-        rescue => e
-          puts e.message
-          errors += 1
-        end
-
+        createSentinelDatum(f)
       end
 
       puts m
@@ -110,4 +41,27 @@ def getHTTPData
   puts "Total Data Points: #{total}"
   puts "Errors: #{errors}"
 
+end
+
+def createSentinelDatum(feature)
+  hash = Hash.new
+  props = feature['properties']
+
+  hash['hotspot_id'] = feature['id']
+  hash['sentinel_id'] = props['id']
+  hash['longitude'] = props['longitude']
+  hash['latitude'] = props['latitude']
+  hash['temp_kelvin'] = props['temp_kelvin']
+  hash['datetime'] = props['datetime']
+  hash['power'] = props['power']
+  hash['confidence'] = props['confidence']
+  hash['australian_state'] = props['australian_state'].strip
+
+  begin
+    s = SentinelDatum.create!(hash)
+    total += 1
+  rescue => e
+    puts e.message
+    errors += 1
+  end
 end
