@@ -1,0 +1,32 @@
+@import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css');
+
+body {
+	padding-top: 70px;
+}
+
+/* change border radius for the tab , apply corners on top*/
+
+#heatmapTab .nav-pills > li > a {
+	border-radius: 4px 4px 0 0;
+}
+
+#heatmapTab .tab-content {
+	color : white;
+	background-color: #337ab7;
+	padding : 5px 15px;
+}
+
+.profile {
+    display: block;
+    border-radius: 50%;
+	border-color: #fff;
+    background-color: #fff;
+	background: #fff;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#footer {
+	background-color: #333;
+	color: #fff;
+}
