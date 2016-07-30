@@ -79,6 +79,7 @@ def getHTTPData
         hash = Hash.new
         props = f['properties']
 
+        hash['hotspot_id'] = f['id']
         hash['sentinel_id'] = props['id']
         hash['longitude'] = props['longitude']
         hash['latitude'] = props['latitude']
