@@ -5,13 +5,12 @@ require 'net/ftp'
 SENTINEL_URL = 'ftp://ftp.ga.gov.au/outgoing-emergency-imagery/sentinel/'
 
 namespace :data do
-  desc "Get latest Sentinel data"
+  desc "Seed latest Sentinel data"
   task seed_sentinel: :environment do
     paths = getFilePaths
     getData(paths)
   end
 end
-
 
 def getFilePaths
   uri = URI.parse(SENTINEL_URL)
