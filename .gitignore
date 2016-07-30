@@ -44,3 +44,4 @@ bower.json
 # RubyMine
 /.idea/
 /datasets/
+.DS_Store
