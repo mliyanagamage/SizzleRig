@@ -14,7 +14,8 @@ def getData
     months.each do |m|
       url = "#{BASE_URL}australian_state#{START_TIME_QUERY_PREFIX}#{y}-#{m}-01T00%3A00%3A00#{END_TIME_QUERY_PREFIX}#{y}-#{m}-31T23%3A59%3A59"
       resp = HTTParty.get(url)
-      p resp
+      json = JSON.parse(resp.body)
+      p json['features'][0]
     end
   end
 end
