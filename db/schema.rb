@@ -10,20 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160730042957) do
+ActiveRecord::Schema.define(version: 20160730072604) do
 
   create_table "sentinel_data", force: :cascade do |t|
-    t.decimal  "latitude",   precision: 10, scale: 7
-    t.decimal  "longitude",  precision: 10, scale: 7
-    t.decimal  "temp_k",     precision: 4,  scale: 1
-    t.decimal  "sh",         precision: 4,  scale: 3
-    t.decimal  "sl",         precision: 4,  scale: 3
-    t.decimal  "power",      precision: 3,  scale: 1
+    t.decimal  "latitude",    precision: 10, scale: 7
+    t.decimal  "longitude",   precision: 10, scale: 7
+    t.decimal  "sh",          precision: 4,  scale: 3
+    t.decimal  "sl",          precision: 4,  scale: 3
+    t.decimal  "power",       precision: 3,  scale: 1
     t.integer  "confidence"
     t.datetime "datetime"
     t.string   "offset"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.decimal  "temp_kelvin", precision: 4,  scale: 1
+    t.string   "sentinel_id"
   end
 
 end
