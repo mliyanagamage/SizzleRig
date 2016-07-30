@@ -69,8 +69,15 @@
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -28, lng: 132},
           zoom: 4,
-          disableDefaultUI: true
+          maxZoom: 4,
+          minZoom:4,
+          disableDefaultUI: true,
+          keyboardShortcuts: false,
+          draggable: false,
+          clickableIcons: false
         });
+
+        console.log(map.bounds);
 
         map.setOptions({styles: styles});
 
@@ -81,6 +88,11 @@
         map.data.add({geometry: new google.maps.Data.Point(myLatLng)});
         map.data.add({geometry: new google.maps.Data.Point(myLatLng2)});
         map.data.add({geometry: new google.maps.Data.Point(myLatLng3)});
+
+        // Prevent listeners
+        map.addListener('click', function(evt) {
+          console.log(map.getBounds().getNorthEast() + ',' + map.getBounds().getSouthWest());
+        });
       }
 
     </script>
