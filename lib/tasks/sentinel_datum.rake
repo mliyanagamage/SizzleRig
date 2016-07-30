@@ -3,8 +3,9 @@ require 'csv'
 require 'net/ftp'
 require 'httparty'
 
+MAX_DATA_POINTS = 200000
 FTP_URL = 'ftp://ftp.ga.gov.au/outgoing-emergency-imagery/sentinel/'
-HTTP_URL = 'http://sentinel.ga.gov.au/geoserver-historic/sentinel/wfs?service=WFS&version=1.1.0&request=GetFeature&typeName=sentinel%3Ahotspot_historic&outputFormat=json&maxFeatures=1000&CQL_FILTER='
+HTTP_URL = "http://sentinel.ga.gov.au/geoserver-historic/sentinel/wfs?service=WFS&version=1.1.0&request=GetFeature&typeName=sentinel%3Ahotspot_historic&outputFormat=json&maxFeatures=#{MAX_DATA_POINTS}&CQL_FILTER="
 START_TIME_QUERY_PREFIX = '%20IS%20NOT%20null%20AND%20datetime%20BETWEEN%20'
 END_TIME_QUERY_PREFIX = '%20AND%20'
 
@@ -36,7 +37,7 @@ def getFTPFilePaths
         lines.each do |l|
           name = l.split(" ").delete_if { |w| !w.include?(".txt")}
           path = FTP_URL + d + '/' + name[0]
-          p path
+          puts path
           path_list << path
         end
       end
@@ -53,7 +54,7 @@ def getFTPData(paths)
     field && field.empty? ? nil : field
   end
 
-  p "Deprecated in migration!"
+  puts "Deprecated in migration!"
   # paths.each do |path|
   #   open(path) { |f|
   #     csv = CSV.new(f, :headers => true, :header_converters => :symbol, :converters => [:all, :blank_to_nil])
@@ -70,6 +71,7 @@ def getHTTPData
   errors = 0
 
   years.each do |y|
+    puts y
     months.each do |m|
       url = "#{HTTP_URL}australian_state#{START_TIME_QUERY_PREFIX}#{y}-#{m}-01T00%3A00%3A00#{END_TIME_QUERY_PREFIX}#{y}-#{m}-31T23%3A59%3A59"
       resp = HTTParty.get(url)
@@ -92,17 +94,20 @@ def getHTTPData
 
         begin
           s = SentinelDatum.create!(hash)
-          p "Created sentinel datum at #{s.longitude}, #{s.latitude}"
           total += 1
         rescue => e
-          p e.message
+          puts e.message
           errors += 1
         end
 
       end
-    end
 
-    p "Total Data Points: #{total}"
-    p "Errors: #{errors}"
+      puts m
+      puts "Datapoint count: #{features.count}"
+    end
   end
+
+  puts "Total Data Points: #{total}"
+  puts "Errors: #{errors}"
+
 end
