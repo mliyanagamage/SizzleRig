@@ -98,8 +98,11 @@ def getHTTPData
           p e.message
           errors += 1
         end
-      end
 
+      end
     end
+
+    p "Total Data Points: #{total}"
+    p "Errors: #{errors}"
   end
 end
