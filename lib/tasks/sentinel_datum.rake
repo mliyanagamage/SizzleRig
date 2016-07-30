@@ -1,12 +1,20 @@
-#!/usr/bin/env ruby
-
 require 'open-uri'
 require 'csv'
+require 'net/ftp'
 
-BASE_URL = 'ftp://ftp.ga.gov.au/outgoing-emergency-imagery/sentinel/'
+SENTINEL_URL = 'ftp://ftp.ga.gov.au/outgoing-emergency-imagery/sentinel/'
+
+namespace :data do
+  desc "Get latest Sentinel data"
+  task seed_sentinel: :environment do
+    paths = getFilePaths
+    getData(paths)
+  end
+end
+
 
 def getFilePaths
-  uri = URI.parse(BASE_URL)
+  uri = URI.parse(SENTINEL_URL)
   dirs = ['AVHRR', 'hotspots', 'MODIS', 'VIIRS']
   path_list = []
 
@@ -19,7 +27,7 @@ def getFilePaths
 
         lines.each do |l|
           name = l.split(" ").delete_if { |w| !w.include?(".txt")}
-          path = BASE_URL + d + '/' + name[0]
+          path = SENTINEL_URL + d + '/' + name[0]
           p path
           path_list << path
         end
@@ -40,11 +48,8 @@ def getData(paths)
   paths.each do |path|
     open(path) { |f|
       csv = CSV.new(f, :headers => true, :header_converters => :symbol, :converters => [:all, :blank_to_nil])
-      p csv.to_a.map {|row| row.to_hash }
+      csv.to_a.map {|row| SentinelDatum.create(row.to_hash)}
     }
   end
 
 end
-
-paths = getFilePaths
-getData(paths)
