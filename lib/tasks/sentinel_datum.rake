@@ -67,6 +67,7 @@ def getHTTPData
   years = Array(2002..2016)
   months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
   total = 0
+  errors = 0
 
   years.each do |y|
     months.each do |m|
@@ -90,10 +91,12 @@ def getHTTPData
         hash['australian_state'] = props['australian_state'].strip
 
         begin
-          s = SentinelDatum.create(hash)
+          s = SentinelDatum.create!(hash)
           p "Created sentinel datum at #{s.longitude}, #{s.latitude}"
-        rescue ActiveRecord::RecordInvalid => e
-            p e.record.error
+          total += 1
+        rescue => e
+          p e.message
+          errors += 1
         end
       end
 
