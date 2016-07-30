@@ -56,12 +56,13 @@ def createSentinelDatum(feature)
   hash['power'] = props['power']
   hash['confidence'] = props['confidence']
   hash['australian_state'] = props['australian_state'].strip
+  hash['unique_hash'] = Digest::SHA256.hexdigest(props['longitude'].to_s + props['latitude'].to_s + props['datetime'].to_s)
 
   begin
     s = SentinelDatum.create!(hash)
-    total += 1
+    # total += 1
   rescue => e
     puts e.message
-    errors += 1
+    # errors += 1
   end
 end

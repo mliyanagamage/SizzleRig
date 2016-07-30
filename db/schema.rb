@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160730094818) do
+ActiveRecord::Schema.define(version: 20160730231850) do
 
   create_table "sentinel_data", force: :cascade do |t|
     t.decimal  "latitude",         precision: 10, scale: 7
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20160730094818) do
     t.string   "australian_state"
     t.string   "hotspot_id"
     t.integer  "sentinel_id"
+    t.string   "unique_hash"
   end
 
 end
