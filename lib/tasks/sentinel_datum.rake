@@ -84,8 +84,8 @@ def getHTTPData
         hash['latitude'] = props['latitude']
         hash['temp_kelvin'] = props['temp_kelvin']
         hash['datetime'] = props['datetime']
-        hash['power'] = props['datetime']
-        hash['confidence'] = props['datetime']
+        hash['power'] = props['power']
+        hash['confidence'] = props['confidence']
         hash['australian_state'] = props['australian_state'].strip
 
         begin
