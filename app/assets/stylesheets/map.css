@@ -1,0 +1,16 @@
+.subunit.AUA { fill: #ddc; }
+.subunit.AUM { fill: #cdd; }
+.subunit.AUZ { fill: #cdc; }
+.subunit.NZA { fill: #dcd; }
+.subunit.NZC { fill: #dcc }
+.subunit.NZK { fill: #ccd }
+.subunit.NZN { fill: #bcb }
+.subunit.NZS { fill: #dcb }
+.subunit.TKL { fill: #abc }
+
+.subunit-boundary {
+  fill: none;
+  stroke: #777;
+  stroke-dasharray: 2,2;
+  stroke-linejoin: round;
+}
