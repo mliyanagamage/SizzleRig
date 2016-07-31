@@ -10,8 +10,8 @@ module SizzleRig::Arduino
     
     def rotate(percentage)
       raise ArgumentError, "Percentage must be between 0.0 and 1.0" unless percentage > 0.0 && percentage <= 1.0
-      
-      @io.puts percentage.to_s
+
+      @io.puts percentage.round(2)
     end
   end
 end

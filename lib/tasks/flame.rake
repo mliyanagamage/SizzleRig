@@ -1,4 +1,5 @@
 YEAR_RANGE = Array(2007..2016)
+NORMAL_VALUE = 2.2
 
 namespace :flame do
   desc "Flame Story Nation Wide"
@@ -88,13 +89,50 @@ namespace :flame do
 
     do_fire(fire_values)
   end
+
+  desc "Thread for Day"
+  task :threat => :environment do 
+    date = ENV["DATE"]
+
+    if date.nil?
+      raise
+    end
+
+    date = Date.parse(date).to_time
+
+    total_points = SentinelDatum.count
+    avg_power = SentinelDatum.pluck(:power).reject(&:nil?).reduce(:+) / total_points
+
+    total_for_day = SentinelDatum.where(datetime: date.beginning_of_day..date.end_of_day).count
+    avg_power_for_day = SentinelDatum.where(datetime: date.beginning_of_day..date.end_of_day).pluck(:power).reject(&:nil?).reduce(:+)
+
+    if avg_power_for_day.present?
+      avg_power_for_day /= total_for_day
+
+      fire_value = avg_power_for_day / avg_power
+    else
+      fire_value = 0.01
+    end
+
+    fire_value /= NORMAL_VALUE
+
+    p "Fire Value is #{fire_value.to_f}"
+    SizzleRig::Arduino::Serial.instance.rotate(fire_value.to_f)
+    p "Movement Complete, Press enter to stop"
+    input = STDIN.gets
+    SizzleRig::Arduino::Serial.instance.rotate(0.01)
+    p "Movement complete"
+  end
 end
 
 def do_fire(values)
   values.each_with_index do |f, i|
-    "Moving for #{YEAR_RANGE[i]}"
+    puts "Moving for #{YEAR_RANGE[i]}"
     SizzleRig::Arduino::Serial.instance.rotate(f.to_f)
+    puts "Movement complete, press enter to continue"
+    input = STDIN.gets
   end
+  SizzleRig::Arduino::Serial.instance.rotate(0.01)
 end
 
 # entire story, first to last
