@@ -93,7 +93,11 @@ function plotData(data) {
   var heatmap = new google.maps.visualization.HeatmapLayer({
     data: heatMapData
   });
-  
+
   heatmap.setMap(map);
   console.log("Plotted.");
+}
+
+function submitDate() {
+  console.log("submit date");
 }
