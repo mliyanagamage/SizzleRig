@@ -87,8 +87,7 @@ function initMap() {
   map.setOptions({styles: styles});
 
   if (location.search !== null) {
-    console.log(location.search);
-    markAddress(location.search);
+    markAddress(unescape(location.search.substr(1)));
   }
 
   // Set heatmap to today
@@ -101,7 +100,9 @@ function markAddress(query) {
   geocoder = new google.maps.Geocoder();
   addressMarker = undefined;
 
-  geocoder.geocode( { 'address': unescape(query)}, function(results, status) {
+  console.log(query);
+  
+  geocoder.geocode( { 'address': query}, function(results, status) {
       if (status == 'OK') {
         addressMarker = new google.maps.Marker({
           position: results[0].geometry.location,
