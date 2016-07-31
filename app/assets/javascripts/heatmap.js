@@ -120,6 +120,7 @@ function plotData(data) {
 
 function submitDate(e) {
   e.preventDefault();
+  e.stopPropagation()
 
   $.get( '/heatmap/data?date=' + $("#date").val(), function(data) {
     plotData(data.data)
