@@ -1,28 +1,30 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 
-
+var today;
 $(document).ready(function () {
   $('#date').datepicker({
     format: "yyyy-mm-dd",
     autoclose: true
   });
 
-  var today = new Date();
+  today = new Date();
   var dd = today.getDate();
-  var mm = today.getMonth() + 1; //January is 0!
+  var mm = today.getMonth() + 1; // January is 0
   var yyyy = today.getFullYear();
 
   if (dd < 10) dd = '0' + dd;
   if (mm < 10) mm = '0' + mm;
 
-  today = yyyy + '-' + mm + '-' + dd; // USE TODAY!!
+  today = yyyy + '-' + mm + '-' + dd;
 
   $('#date').datepicker('update', today)
 });
 
 var map;
 var heatmap;
+var geocoder;
+var addressMarker;
 var styles = [
   {
     "stylers": [
@@ -68,6 +70,8 @@ var styles = [
 ]
 
 function initMap() {
+
+  // Map
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: -28, lng: 132},
     zoom: 4,
@@ -82,18 +86,33 @@ function initMap() {
 
   map.setOptions({styles: styles});
 
-  var today = new Date();
-  var dd = today.getDate();
-  var mm = today.getMonth() + 1; //January is 0!
-  var yyyy = today.getFullYear();
+  if (location.search !== null) {
+    console.log(location.search);
+    markAddress(location.search);
+  }
 
-  if (dd < 10) dd = '0' + dd;
-  if (mm < 10) mm = '0' + mm;
-
-  today = yyyy + '-' + mm + '-' + dd; // USE TODAY!!
-  $.get( '/heatmap/data?date=' + '2004-10-04', function(data) {
+  // Set heatmap to today
+  $.get( '/heatmap/data?date=' + today, function(data) {
     plotData(data.data)
   });
+}
+
+function markAddress(query) {
+  geocoder = new google.maps.Geocoder();
+  addressMarker = undefined;
+
+  geocoder.geocode( { 'address': unescape(query)}, function(results, status) {
+      if (status == 'OK') {
+        addressMarker = new google.maps.Marker({
+          position: results[0].geometry.location,
+          map: map,
+          title: 'Your Address'
+        });
+      } else {
+        console.log(status);
+        alert('Could not match your address!');
+      }
+    });
 }
 
 function plotData(data) {
