@@ -100,6 +100,10 @@ function plotData(data) {
   console.log("Plotting...");
   if (data.length === 0) return console.log('No data to plot')
 
+  if (heatmap !== undefined) {
+    heatmap.setMap(null)
+  }
+
   var heatMapData = []
   for (var i = 0; i < data.length; i++) {
     var lat = parseFloat(data[i].latitude);
