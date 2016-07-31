@@ -61,8 +61,8 @@ namespace :flame do
       start_time = Date.new(y).to_time
       end_time = start_time.end_of_year.to_time
 
-      year_count = SentinelDatum.where(datetime: start_time..end_time).count
-      year_avg_power = SentinelDatum.where(datetime: start_time..end_time).pluck(:power).reject(&:nil?).reduce(:+)
+      year_count = SentinelDatum.where(datetime: start_time..end_time, australian_state: state).count
+      year_avg_power = SentinelDatum.where(datetime: start_time..end_time, australian_state: state).pluck(:power).reject(&:nil?).reduce(:+)
 
       if year_avg_power.present?
         year_avg_power /= year_count
@@ -105,6 +105,48 @@ namespace :flame do
 
     total_for_day = SentinelDatum.where(datetime: date.beginning_of_day..date.end_of_day).count
     avg_power_for_day = SentinelDatum.where(datetime: date.beginning_of_day..date.end_of_day).pluck(:power).reject(&:nil?).reduce(:+)
+
+    if avg_power_for_day.present?
+      avg_power_for_day /= total_for_day
+
+      fire_value = avg_power_for_day / avg_power
+    else
+      fire_value = 0.01
+    end
+
+    fire_value /= NORMAL_VALUE
+
+    p "Fire Value is #{fire_value.to_f}"
+    SizzleRig::Arduino::Serial.instance.rotate(fire_value.to_f)
+    p "Movement Complete, Press enter to stop"
+    input = STDIN.gets
+    SizzleRig::Arduino::Serial.instance.rotate(0.01)
+    p "Movement complete"
+  end
+
+  desc "Thread for Day in State"
+  task :threat => :environment do 
+    date = ENV["DATE"]
+
+    if date.nil?
+      raise
+    end
+
+    date = Date.parse(date).to_time
+
+    state = ENV["STATE"] || "ACT"
+
+    state = state.upcase
+
+    unless ["NT", "SA", "QLD", "NSW", "WA", "VIC", "TAS", "ACT"].include?(state)
+      raise ArgumentError, "Invalid State"
+    end
+
+    total_points = SentinelDatum.count
+    avg_power = SentinelDatum.pluck(:power).reject(&:nil?).reduce(:+) / total_points
+
+    total_for_day = SentinelDatum.where(datetime: date.beginning_of_day..date.end_of_day, australian_state: state).count
+    avg_power_for_day = SentinelDatum.where(datetime: date.beginning_of_day..date.end_of_day, australian_state: state).pluck(:power).reject(&:nil?).reduce(:+)
 
     if avg_power_for_day.present?
       avg_power_for_day /= total_for_day
