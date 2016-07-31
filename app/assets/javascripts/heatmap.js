@@ -63,7 +63,7 @@ function initMap() {
 
   var today = new Date();
   var dd = today.getDate();
-  var mm = today.getMonth()+1; //January is 0!
+  var mm = today.getMonth() + 1; //January is 0!
   var yyyy = today.getFullYear();
 
   if (dd < 10) dd = '0' + dd;
@@ -76,8 +76,7 @@ function initMap() {
 
   map.data.setStyle({
     icon: {
-      path: google.maps.SymbolPath.CIRCLE,
-      scale: 1
+      url: "http://localhost:3000/red.png",
     }
   })
 }
