@@ -61,18 +61,37 @@ function initMap() {
 
   map.setOptions({styles: styles});
 
-  $.get( "/heatmap/data?date=2003-10-16", function(data) {
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0!
+  var yyyy = today.getFullYear();
+
+  if (dd < 10) dd = '0' + dd;
+  if (mm < 10) mm = '0' + mm;
+
+  today = yyyy + '-' + mm + '-' + dd; // USE TODAY!!
+  $.get( '/heatmap/data?date=' + '2004-10-04', function(data) {
     plotData(data.data)
   });
+
+  map.data.setStyle({
+    icon: {
+      path: google.maps.SymbolPath.CIRCLE,
+      scale: 2
+    },
+    fillColor: 'red'
+  })
 }
 
 function plotData(data) {
+  if (data.length === 0) return console.log('No data to plot')
+
   for (var i = 0; i < data.length; i++) {
     var lat = parseFloat(data[i].latitude);
     var lng = parseFloat(data[i].longitude);
     var latLng = {lat: lat, lng: lng};
 
-    console.log("Adding " + lat + ', ' + lng);
+    console.log("Adding: " + lat + ', ' + lng);
     map.data.add({geometry: new google.maps.Data.Point(latLng)});
   }
 }
