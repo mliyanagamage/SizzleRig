@@ -5,11 +5,11 @@ class HeatmapController < ApplicationController
 
   def data
     if params[:date].present?
-      start_time = Date.parse(params[:date]).beginning_of_week.to_time
+      start_time = Date.parse(params[:date]).beginning_of_day.to_time
     else
-      start_time = Time.now.beginning_of_week
+      start_time = Time.now.beginning_of_day
     end
-    end_time = start_time.end_of_week
+    end_time = start_time.end_of_day
 
     @data = SentinelDatum.where(datetime: start_time..end_time).select(:latitude, :longitude, :power, :id)
 

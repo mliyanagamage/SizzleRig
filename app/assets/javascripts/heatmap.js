@@ -77,9 +77,8 @@ function initMap() {
   map.data.setStyle({
     icon: {
       path: google.maps.SymbolPath.CIRCLE,
-      scale: 2
-    },
-    fillColor: 'red'
+      scale: 1
+    }
   })
 }
 
