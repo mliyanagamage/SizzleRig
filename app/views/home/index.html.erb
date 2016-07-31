@@ -1,58 +1,111 @@
-   <!-- Page Intro -->
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1>Visualising Australia's Bushfire Data</h1>
-                <p class="lead">... or some other, and much better, tagline.</p>
-            </div>
-		</div>
-		<div class="row">
-			<div class="col-sm-9">
-                <img class="img-responsive" src="http://placehold.it/800x400">
-            </div>
-			<div class="col-sm-3">
-                <h1>Try the app.</h1>
-                <p class="lead">Or risk being !squiggley.</p>
-				<a href="/heatmap" class="btn btn-info btn-lg" role="button">Link Button</a>
-            </div>
-        </div>
-        <!-- /.row -->
+<!-- Page Intro -->
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Are you at risk from bushfire?</h1>
+        <p>Receive a <strong>free</strong> risk assessment for any Australian address - instantly. Safeguard your community, livestock, and property.</p>
+			<form class="form-inline">
+				<div class="form-group-lg col-md-12">
+					<input type="text" class="form-control col-md-4" id="email" placeholder="Email">
+					<input type="text" class="form-control col-md-6" id="address" placeholder="Address">
+					<button type="submit" class="btn btn-primary btn-lg">Assess my Property</button>
+				</div>
+			</form>
+      </div>
     </div>
 
-	<!-- Firenado -->
+	<!-- How it Works -->
 	<div class="container">
+      <!-- Example row of columns -->
 		<div class="row">
-			<div class="col-lg-12" id="firenado">
-				<h1>Firenado</h1>
+			<div class="col-md-12">
+				<h1>Make informed choices with our data-driven approach.</h1>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-md-6">
-				<p>Column 1.</p>
-			</div>
-			<div class="col-md-6">
-				<p>Column 2.</p>
-			</div>
-		</div>
+        <div class="col-md-4">
+			<img class="img-responsive" src="./img/insurers.png">
+          <h2>Insurers</h2>
+          <p>Climate change increases the likelihood and severity of bushfires. Make better underwriting decisions through our unique combination of historical data, real-time satellite feeds, and machine learning technologies. <a href="#about">Read more</a> about SizzleRig or <a href="mailto:teamsquigglepig@gmmail.com">contact us</a> today about a subscription.</p>
+        </div>
+        <div class="col-md-4">
+          <img class="img-responsive" src="./img/agribusiness.png">
+		  <h2>Agribusiness</h2>
+          <p>Bushfire mismanagement represents a potentially catastrophic risk to livestock, crops, and profitability. Receive real-time reports and forecasts to improve your decision-making in upcoming fire seasons. <a href="#about">Read more</a> about SizzleRig or <a href="mailto:teamsquigglepig@gmmail.com">contact us</a> today our site reporting service.</p>
+       </div>
+        <div class="col-md-4">
+          <img class="img-responsive" src="./img/homeowners.png">
+		  <h2>Homeowners</h2>
+          <p>Are you buying a new property, or concerned that climate change will bring increased risk of bushfire to your area? Receive a free and instant SizzleRig assessment for your home. Complete the easy form above to receive your free report today.</p>
+        </div>
+    </div>
+	<div class="container">
+		<hr />
 	</div>
-
 	<!-- About -->
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-12" id="about">
+			<div class="col-md-12" id="about">
 				<h1>About</h1>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-6">
-				<p>Column 1.</p>
+			<div class="col-md-12">
+				<p>This website is developed as part of our submission for <a href="http://govhack.org">GovHack 2016.</a> The 'SizzleRig' project involves analysis of bushfire data from national, state and territory governments. With machine learning tools we have developed a system for rating the threat of bushfire for any location in Australia that includes historical and real-time data from CSIRO's Sentinel HotSpots satellite programme.</p>
 			</div>
-			<div class="col-md-6">
-				<p>Column 2.</p>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<h2>Web App & Big Data</h2>
+				<p>From the website: Data 61 and Geoscience Australia's "Sentinel HotSpots provides an important and consistent overview for management of fires across the country." The data is traditionally used for land and bushfire management. However, data older than 10 days is purged from the public-facing FTP service.</p>
+
+				<p><img class="img-responsive" src="./img/hotspots.png" />	</p>
+
+				<p>We have combined this data with other Government datasets to build a reporting and forecasting tool for bushfire data. We are also using this data as the foundation of our public facing API that makes the entire dataset available to others. This includes more than 5.5million data points that have been collected since 2002. We achieved this by mimicking the outgoing network requests from the Sentinel application.</p>
+
+				<p><img class="img-responsive" src="./img/code.png" /></p>
+
+				<p>We have a range of data visualisations available on our web app, including the percentage of the country on fire at any one date, and the threat level (or even bushfire intensity) of any localised fire. This data is being used to dictate the height of a flame in the novel hardware component of our project.</p>
+
+				<p>You can access our source code at our GitHub repository! <a href="https://github.com/mliyanagamage/SizzleRig">Check it out.</a></p>
+			</div>
+			<div class="col-md-4">
+				<h2>Data, Electronics, Fire!</h2>
+				<p>Our SizzleRig web application is great for software-based bushfire visualisation, reporting, and management. But fire itself is visually exciting; humanity's great perennial friend and foe.</p>
+
+				<p><img class="img-responsive" src="./img/bushfire.png" /></p>
+
+				<p>Our web app is designed to help insurers, policymakers, and citizens make informed choices about their activities in bushfire-prone areas. We decided to visualise and manage fire in a literal way through building the hardware aspect of this project.</p>
+
+				<p><strong>Photo of SizzleRig</strong></p>
+
+				<p>Our gas-fed device is mechanically operated via an Arduino controller. A column of fire burns bright within a perspex housing, its height controlled by the software. You can see the unit in action through this video.</p>
+
+				<p><strong>Video goes here</strong></p>
+
+				<p>The casing for the unit is made from MDF. It contains a perspex mounting rig for the Arduino and stepper motors. The gas flow is controlled by safe, industry-standard fittings. However, we absolutely recommend you work with a professional if you intend to make this at home.</p>
+			</div>
+			<div class="col-md-4">
+				<h2>3D Printing & Mold-Making</h2>
+				<p>Team SquigglePig is truly enamoured of its mascot. We wanted to share him with other GovHack Canberra participants.</p>
+
+				<p><img class="img-responsive" src="./img/squigglepig.png" /></p>
+
+				<p>First we whiteboaraded a logo, which was then vectorised.</p>
+
+				<p><img class="img-responsive" src="./img/whiteboard.png" /></p>
+
+				<p>The vector-formatted file was then converted into an extruded piece in a CAD file for 3D printing.</p>
+
+				<p><img class="img-responsive" src="./img/cad.png" /></p>
+
+				<p>This was moulded using food-safe silicone, which we used to make chocolate casts of our character, promoting the #GovHack and #StaySquiggley hashtags.</p>
+
+				<p><img class="img-responsive" src="./img/chocolate.png" /></p>
 			</div>
 		</div>
 	</div>
-
+	<div class="container">
+		<hr />
+	</div>
 	<!-- Team -->
 	<div class="container">
 		<div class="row">
@@ -60,29 +113,25 @@
 				<h1>Team</h1>
 			</div>
 		</div><div class="row text-center">
+			<img class="img-responsive" style="margin-bottom: 1em;" src="./img/teamphoto.png" />
 			<div class="col-sm-3">
-				<img class="profile" src="http://placehold.it/225x225">
-				<h3>Erica H.</h3>
-				<p class="lead">Hardware</p>
-				<p class="img-responsive">Profile text.</p>
-			</div>
-			<div class="col-sm-3">
-				<img class="profile" src="http://placehold.it/225x225">
-				<h3>Migara L.</h3>
+				<h3 class="profiletext">Migara L.</h3>
 				<p class="lead">Arduino</p>
-				<p class="img-responsive">Profile text.</p>
 			</div>
 			<div class="col-sm-3">
-				<img class="profile" src="http://placehold.it/225x225">
-				<h3>Nick H.</h3>
-				<p class="lead">Backend</p>
-				<p class="img-responsive">Profile text.</p>
+				<h3 class="profiletext">Erica H.</h3>
+				<p class="lead">Hardware</p>
 			</div>
 			<div class="col-sm-3">
-				<img class="profile" src="http://placehold.it/225x225">
-				<h3>Matt S.</h3>
+				<h3 class="profiletext">Matt S.</h3>
 				<p class="lead">Frontend</p>
-				<p class="img-responsive">Profile text.</p>
+			</div>
+			<div class="col-sm-3">
+				<h3 class="profiletext">Nick H.</h3>
+				<p class="lead">Backend</p>
 			</div>
 		</div>
+	</div>
+	<div class="container">
+		<hr />
 	</div>
