@@ -21,6 +21,11 @@ body {
 	border: none;
 }
 
+.profiletext {
+	font-weight: bold;
+	color: #ec008c;
+}
+
 .jumbotron {
 	padding-top: 120px;
 	padding-bottom: 80px;
