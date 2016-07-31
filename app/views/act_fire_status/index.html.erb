@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="jumbotron" style="margin-bottom: 100px;">
+    <h1>ACT Fire Danger Rating Meter</h1>
+    <p class="lead">Or as we call it... Can we use the SizzleRig™??</p>
+
+    <h4>Danger Rating: <span class="label label-default"><%= @fire_status %></span></h4> 
+    <h4>Total Fire Ban: <span class="label label-default"><%= @ban_status %></span></h4>
+
+    <h3>Can we bring on the Sizzle?</h3>
+
+    <% if @ban_status == "No" %>
+      <div class="alert alert-success" role="alert">YES WE CAN!!!!</div>
+    <% else %>
+      <div class="alert alert-danger" role="alert">NO! SHUT IT DOWN</div>
+    <% end %>
+
+    <span class="label label-info" style="float: right;">Last Updated: <%= @date %></span>
+  </div>
+</div>
