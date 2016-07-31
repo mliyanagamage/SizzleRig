@@ -21,6 +21,11 @@ body {
 	border: none;
 }
 
+.btn-primary:hover {
+	background: #d3007d;
+	border: none;
+}
+
 .profiletext {
 	font-weight: bold;
 	color: #ec008c;
