@@ -7,6 +7,7 @@ class FlameController < ApplicationController
       fire_level = 0.01
     end
 
-    SizzleRig::Arduino::Serial.rotate(fire_level)
+    SizzleRig::Arduino::Serial.instance.rotate(fire_level)
   end
+
 end
