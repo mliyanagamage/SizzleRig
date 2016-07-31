@@ -55,6 +55,7 @@ var styles = [
       disableDefaultUI: true,
       keyboardShortcuts: false,
       draggable: false,
+      scrollwheel: false,
       clickableIcons: false
     });
 
