@@ -98,6 +98,9 @@ function plotData(data) {
   console.log("Plotted.");
 }
 
-function submitDate() {
-  console.log("submit date");
+function submitDate(e) {
+  e.preventDefault();
+
+  console.log($("#date").val())
+
 }
