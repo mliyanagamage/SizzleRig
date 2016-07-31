@@ -46,33 +46,33 @@ var styles = [
   }
 ]
 
-  function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: -28, lng: 132},
-      zoom: 4,
-      maxZoom: 4,
-      minZoom:4,
-      disableDefaultUI: true,
-      keyboardShortcuts: false,
-      draggable: false,
-      scrollwheel: false,
-      clickableIcons: false
-    });
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: -28, lng: 132},
+    zoom: 4,
+    maxZoom: 4,
+    minZoom:4,
+    disableDefaultUI: true,
+    keyboardShortcuts: false,
+    draggable: false,
+    scrollwheel: false,
+    clickableIcons: false
+  });
 
-    console.log(map.bounds);
+  map.setOptions({styles: styles});
 
-    map.setOptions({styles: styles});
+  $.get( "/heatmap/data?date=2003-10-16", function(data) {
+    plotData(data.data)
+  });
+}
 
-    $.get( "/heatmap/data?date=2016-01-16", function( data ) {
-      console.log(data);
-    });
+function plotData(data) {
+  for (var i = 0; i < data.length; i++) {
+    var lat = parseFloat(data[i].latitude);
+    var lng = parseFloat(data[i].longitude);
+    var latLng = {lat: lat, lng: lng};
 
-    // Add dummy data
-    var myLatLng = {lat: -25.363, lng: 131.044};
-    var myLatLng2 = {lat: -26.363, lng: 132.044};
-    var myLatLng3 = {lat: -29.363, lng: 135.044};
-
-    map.data.add({geometry: new google.maps.Data.Point(myLatLng)});
-    map.data.add({geometry: new google.maps.Data.Point(myLatLng2)});
-    map.data.add({geometry: new google.maps.Data.Point(myLatLng3)});
+    console.log("Adding " + lat + ', ' + lng);
+    map.data.add({geometry: new google.maps.Data.Point(latLng)});
   }
+}
