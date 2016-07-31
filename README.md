@@ -17,7 +17,7 @@ The web application for [SizzleRig.com](http://sizzlerig.com) (stored in this re
 
 ### The Hardware Visualizer
 
-![SizzeRig Hardware]()
+![SizzeRig Hardware](./app/assets/images/sizzle.png)
 
 The hardware visualizers a modified "flamethrower" (featured above). We thinks its safe (promise). The uses a LPG gas tank connected a nozzle. This is wired to a Arduino along with a stepper motor so that the gas flow can be controlled remotely. Processed data from the web app is sent to the Arduino where the gas is controlled to provide a visualization of the data. The source code for the Arduino can be found in the `src` folder.
 
