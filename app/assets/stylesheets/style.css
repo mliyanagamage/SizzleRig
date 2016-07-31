@@ -34,6 +34,11 @@ input[type="date"]::-webkit-input-placeholder{
 	border: none;
 }
 
+.btn-primary:focus {
+	background: #b9006e;
+	border: none;
+}
+
 .profiletext {
 	font-weight: bold;
 	color: #ec008c;
