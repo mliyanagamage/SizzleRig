@@ -82,14 +82,17 @@ function initMap() {
 }
 
 function plotData(data) {
+  console.log("Plotting...");
   if (data.length === 0) return console.log('No data to plot')
 
   for (var i = 0; i < data.length; i++) {
     var lat = parseFloat(data[i].latitude);
     var lng = parseFloat(data[i].longitude);
+    var power = parseFloat(data[i].power);
     var latLng = {lat: lat, lng: lng};
 
-    console.log("Adding: " + lat + ', ' + lng);
     map.data.add({geometry: new google.maps.Data.Point(latLng)});
   }
+
+  console.log("Plotted.");
 }
