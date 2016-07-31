@@ -19,9 +19,10 @@ $(document).ready(function () {
   today = yyyy + '-' + mm + '-' + dd; // USE TODAY!!
 
   $('#date').datepicker('update', today)
-}); 
+});
 
 var map;
+var heatmap;
 var styles = [
   {
     "stylers": [
@@ -110,7 +111,7 @@ function plotData(data) {
   }
 
 
-  var heatmap = new google.maps.visualization.HeatmapLayer({
+  heatmap = new google.maps.visualization.HeatmapLayer({
     data: heatMapData
   });
 
