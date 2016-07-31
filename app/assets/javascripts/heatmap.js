@@ -1,12 +1,6 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 
-$(document).ready(function () {
-  $('#date').datepicker({
-    format: "yyyy-mm-dd"
-  });
-}); 
-
 var map;
 var styles = [
   {
@@ -107,6 +101,7 @@ function plotData(data) {
 function submitDate(e) {
   e.preventDefault();
 
-  console.log($("#date").val())
-
+  $.get( '/heatmap/data?date=' + $("#date").val(), function(data) {
+    plotData(data.data)
+  });
 }
