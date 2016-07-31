@@ -43,7 +43,9 @@ namespace :flame do
 
   desc "Frame Story State Wide"
   task :state_story => :environment do
-    state = ENV["state"] || "ACT"
+    state = ENV["STATE"] || "ACT"
+
+    state = state.upcase
 
     unless ["NT", "SA", "QLD", "NSW", "WA", "VIC", "TAS", "ACT"].include?(state)
       raise ArgumentError, "Invalid State"
