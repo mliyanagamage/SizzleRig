@@ -63,6 +63,10 @@ var styles = [
 
     map.setOptions({styles: styles});
 
+    $.get( "/heatmap/data?date=2016-01-16", function( data ) {
+      console.log(data);
+    });
+
     // Add dummy data
     var myLatLng = {lat: -25.363, lng: 131.044};
     var myLatLng2 = {lat: -26.363, lng: 132.044};
