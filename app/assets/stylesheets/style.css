@@ -16,6 +16,14 @@ body {
 	padding : 5px 15px;
 }
 
+input::-webkit-calendar-picker-indicator{
+    display: none;
+}
+
+input[type="date"]::-webkit-input-placeholder{ 
+    visibility: hidden !important;
+}
+
 .btn-primary {
 	background: #ec008c;
 	border: none;
