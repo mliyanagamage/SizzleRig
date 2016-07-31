@@ -73,26 +73,27 @@ function initMap() {
   $.get( '/heatmap/data?date=' + '2004-10-04', function(data) {
     plotData(data.data)
   });
-
-  map.data.setStyle({
-    icon: {
-      url: "http://localhost:3000/red.png",
-    }
-  })
 }
 
 function plotData(data) {
   console.log("Plotting...");
   if (data.length === 0) return console.log('No data to plot')
 
+  var heatMapData = []
   for (var i = 0; i < data.length; i++) {
     var lat = parseFloat(data[i].latitude);
     var lng = parseFloat(data[i].longitude);
-    var power = parseFloat(data[i].power);
     var latLng = {lat: lat, lng: lng};
+    var power = parseFloat(data[i].power);
 
-    map.data.add({geometry: new google.maps.Data.Point(latLng)});
+    heatMapData.push({location: new google.maps.LatLng(lat, lng), weight: power});
   }
 
+
+  var heatmap = new google.maps.visualization.HeatmapLayer({
+    data: heatMapData
+  });
+  
+  heatmap.setMap(map);
   console.log("Plotted.");
 }
